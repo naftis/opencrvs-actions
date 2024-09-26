@@ -1,0 +1,66 @@
+name: 🔒 Validate GitHub repository with GraphQL schema
+
+on:
+  workflow_call:
+    inputs:
+      repository:
+        description: "URL of the .git repository" # e.g., opencrvs/opencrvs-countryconfig
+        default: ${{ github.repository }}
+        type: string
+      branch:
+        description: "Branch of the repository" # e.g., develop
+        default: ${{ github.ref_name }}
+        type: string
+      schema:
+        description: "URL of the schema" # e.g., https://raw.githubusercontent.com/opencrvs/opencrvs-core/refs/heads/develop/packages/gateway/src/graphql/schema.graphql
+        required: true
+        type: string
+      glob:
+        description: "Glob pattern to check for *.{graphql,js,ts,jsx,tsx}"
+        default: "**/*.{graphql,js,ts,jsx,tsx}"
+        type: string
+
+jobs:
+  graphql-validation:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20
+
+      - name: Fetch repository
+        uses: actions/checkout@v3
+        with:
+          repository: ${{ inputs.repository }}
+          ref: ${{ inputs.branch }}
+          path: ".tmp"
+
+      - name: Run codegen
+        run: |
+          cat <<EOF > codegen.yml
+          schema: "${{ inputs.schema }}"
+          documents: ".tmp/${{ inputs.glob }}"
+          generates:
+            ./throwaway.ts:
+              plugins:
+                - "typescript"
+                - "typescript-operations"
+                - "typescript-resolvers"
+          EOF
+
+          npm install @graphql-codegen/cli@5.0.2 \
+            @graphql-codegen/typescript@4.0.9 \
+            @graphql-codegen/typescript-operations@4.2.3 \
+            @graphql-codegen/typescript-resolvers@4.2.1 \
+            graphql@16.9.0
+
+          npx graphql-codegen
+
+          if [ $? -ne 0 ]; then
+            echo "### :x: GraphQL Validation Failed" >> $GITHUB_STEP_SUMMARY
+            echo "The GraphQL schema validation encountered errors. Please check the logs for more details." >> $GITHUB_STEP_SUMMARY
+          else
+            echo "### :white_check_mark: GraphQL Validation Passed" >> $GITHUB_STEP_SUMMARY
+            echo "The GraphQL schema validation completed successfully." >> $GITHUB_STEP_SUMMARY
+          fi
