@@ -19,9 +19,13 @@ on:
         description: "Glob pattern to check for *.{graphql,js,ts,jsx,tsx}"
         default: "**/*.{graphql,js,ts,jsx,tsx}"
         type: string
+      name:
+        description: "Name of the workflow"
+        type: string
 
 jobs:
   graphql-validation:
+    name: ${{ inputs.name }}
     runs-on: ubuntu-latest
     steps:
       - name: Setup Node.js

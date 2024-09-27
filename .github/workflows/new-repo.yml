@@ -1,0 +1,63 @@
+name: Version compability matrix
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  countryconfig:
+    strategy:
+      matrix:
+        include:
+          # opencrvs-countryconfig repository combinations
+          - repository: opencrvs/opencrvs-countryconfig
+            me: develop
+            core: release-v1.5.1
+          - repository: opencrvs/opencrvs-countryconfig
+            me: develop
+            core: release-v1.6.0
+          - repository: opencrvs/opencrvs-countryconfig
+            me: release-v1.5.1
+            core: release-v1.5.1
+          - repository: opencrvs/opencrvs-countryconfig
+            me: release-v1.5.1
+            core: release-v1.6.0
+
+          # opencrvs-farajaland repository combinations
+          - repository: opencrvs/opencrvs-farajaland
+            me: develop
+            core: release-v1.5.1
+          - repository: opencrvs/opencrvs-farajaland
+            me: develop
+            core: release-v1.6.0
+          - repository: opencrvs/opencrvs-farajaland
+            me: release-v1.5.1
+            core: release-v1.5.1
+          - repository: opencrvs/opencrvs-farajaland
+            me: release-v1.5.1
+            core: release-v1.6.0
+
+          # dci-crvs-api repository combinations
+          - repository: opencrvs/dci-crvs-api
+            me: develop
+            core: release-v1.5.1
+          - repository: opencrvs/dci-crvs-api
+            me: develop
+            core: release-v1.6.0
+          - repository: opencrvs/dci-crvs-api
+            me: release-v1.5.1
+            core: release-v1.5.1
+          - repository: opencrvs/dci-crvs-api
+            me: release-v1.5.1
+            core: release-v1.6.0
+
+    name: ${{ matrix.repository }}
+    uses: ./.github/workflows/validate-github-repo-with-graphql-schema.yml
+    with:
+      name: me@${{matrix.me}} & core@${{matrix.core}}
+      repository: ${{ matrix.repository }}
+      branch: ${{ matrix.me }}
+      schema: https://raw.githubusercontent.com/opencrvs/opencrvs-core/refs/heads/${{ matrix.core }}/packages/gateway/src/graphql/schema.graphql
