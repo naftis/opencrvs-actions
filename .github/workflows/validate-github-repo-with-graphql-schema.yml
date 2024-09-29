@@ -21,6 +21,7 @@ on:
         type: string
       name:
         description: "Name of the workflow"
+        default: "Validate GraphQL"
         type: string
 
 jobs:
