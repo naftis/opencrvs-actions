@@ -20,11 +20,8 @@ jobs:
             me: release-v1.6.0
             core: release-v1.6.0
           - repository: opencrvs/opencrvs-countryconfig
-            me: release-v1.5.1
-            core: release-v1.5.1
-          - repository: opencrvs/opencrvs-countryconfig
-            me: release-v1.4.2
-            core: release-v1.4.2
+            me: release-v1.5.0
+            core: release-v1.5.0
 
           # opencrvs-farajaland repository combinations
           - repository: opencrvs/opencrvs-farajaland
@@ -36,9 +33,6 @@ jobs:
           - repository: opencrvs/opencrvs-farajaland
             me: release-v1.5.1
             core: release-v1.5.1
-          - repository: opencrvs/opencrvs-farajaland
-            me: release-v1.4.2
-            core: release-v1.4.2
 
           # dci-crvs-api repository combinations
           - repository: opencrvs/dci-crvs-api
