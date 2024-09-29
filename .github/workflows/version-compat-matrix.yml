@@ -43,7 +43,7 @@ jobs:
             core: release-v1.6.0
 
     name: ${{ matrix.repository }}
-    uses: ./.github/workflows/validate-github-repo-with-graphql-schema.yml
+    uses: ./.github/workflows/validate-graphql-queries.yml
     with:
       name: me@${{matrix.me}} & core@${{matrix.core}}
       repository: ${{ matrix.repository }}
