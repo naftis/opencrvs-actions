@@ -15,43 +15,37 @@ jobs:
           # opencrvs-countryconfig repository combinations
           - repository: opencrvs/opencrvs-countryconfig
             me: develop
-            core: release-v1.5.1
+            core: develop
           - repository: opencrvs/opencrvs-countryconfig
-            me: develop
+            me: release-v1.6.0
             core: release-v1.6.0
           - repository: opencrvs/opencrvs-countryconfig
             me: release-v1.5.1
             core: release-v1.5.1
           - repository: opencrvs/opencrvs-countryconfig
-            me: release-v1.5.1
-            core: release-v1.6.0
+            me: release-v1.4.2
+            core: release-v1.4.2
 
           # opencrvs-farajaland repository combinations
           - repository: opencrvs/opencrvs-farajaland
             me: develop
-            core: release-v1.5.1
+            core: develop
           - repository: opencrvs/opencrvs-farajaland
-            me: develop
+            me: release-v1.6.0
             core: release-v1.6.0
           - repository: opencrvs/opencrvs-farajaland
             me: release-v1.5.1
             core: release-v1.5.1
           - repository: opencrvs/opencrvs-farajaland
-            me: release-v1.5.1
-            core: release-v1.6.0
+            me: release-v1.4.2
+            core: release-v1.4.2
 
           # dci-crvs-api repository combinations
           - repository: opencrvs/dci-crvs-api
             me: develop
-            core: release-v1.5.1
+            core: release-v1.5.0
           - repository: opencrvs/dci-crvs-api
             me: develop
-            core: release-v1.6.0
-          - repository: opencrvs/dci-crvs-api
-            me: release-v1.5.1
-            core: release-v1.5.1
-          - repository: opencrvs/dci-crvs-api
-            me: release-v1.5.1
             core: release-v1.6.0
 
     name: ${{ matrix.repository }}
